@@ -7,7 +7,7 @@
 
 
 website.visits <- NULL
-
+ads <- NULL
 # The first two observations of website.visits
 website.visits[1] <- 200
 website.visits[2] <- 203
@@ -25,7 +25,7 @@ for(i in 3:500){
 	ads[i] <- ifelse(ads[i]>0, ads[i], 0)
 }
 
-Y <- cbind(website.visits, ads)
+Y <- cbind(ads, website.visits)
 
 # Have a look at the data
 plot.ts(Y)
@@ -65,3 +65,9 @@ plot(irf.mod.1)
 # This tells us what we should expect to website visits (the response) over time with an impulse to ad buys (the impulse). The red lines are bootstrapped 95% confidence intervals
 
 # Well, that was easy. 
+
+bq1 <- BQ(mod.1)
+
+irf.bq <- irf(bq1, n.ahead = 12, impulse = "ads", response = "website.visits")
+
+plot(irf.bq)
