@@ -1,5 +1,10 @@
-Using a vector autoregression to work out the impact of advertising spend
+A collection of demonstrations for blog posts, online arguments, etc.
 =====
+# prox_weighting: Using proximity score weighting as a method of modelling model changes
+
+
+# ads_demo: Using a vector autoregression to work out the impact of advertising spend
+
 
 The script in this repo gives a simple demonstration of how one could do some analysis of advertising expenditure using a vector autoregression model. The model is fairly general, but makes the following asumptions:
 - Both ad placements and website traffic are mutually endogenous
