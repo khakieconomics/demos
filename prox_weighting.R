@@ -73,21 +73,21 @@ lm2 <- lm(Prod.nad1 ~ ., data = dta.ss)
 
 # note that while we would today estimate the effect as 0, there are periods in which the effect appears quite large. These appear to be right after the slowdowns. 
 
-ggplot(out, aes(x= Dates, group = 1)) + geom_ribbon(aes(ymin = coef.estimate - 1.96*se.coef, ymax = coef.estimate + 1.96*se.coef), fill = "grey", alphe = 0.3)+geom_line(aes(y = coef.estimate)) + scale_x_datetime() + xlab("Time model estimated") + ylab("Estimate of linear relationship\nbetween d(unemployment) and productivity growth") + ggtitle("The relationship between variables\ncan change when we look only at similar histories\n") + geom_hline(aes(y = coef(lm2)[2]))
+ggplot(out, aes(x= Dates, group = 1)) + geom_ribbon(aes(ymin = coef.estimate - 1.96*se.coef, ymax = coef.estimate + 1.96*se.coef), fill = "grey", alphe = 0.3)+geom_line(aes(y = coef.estimate)) + scale_x_datetime() + xlab("Time model estimated") + ylab("Coefficient estimate") + ggtitle("The relationship between variables\ncan change when we look only at similar histories\n") + geom_hline(aes(y = coef(lm2)[2])) + theme_bw(base_size =22)
 
 
 # How do the weights look? As in, how much of the data are we actually using?
 
 # Get the model fitted values, residuals, and the residuals of the unweighted regression
 
-out2 <- data.frame(predicted = mod1$fitted.values, residuals = mod1$residuals, improvement = lm2$residuals, weights = rf1$proximity[i,])
+out2 <- data.frame(predicted = mod1$fitted.values, residuals = mod1$residuals,weights = rf1$proximity[i,])
 # Data construction
 out2$actual <- with(out2, predicted + residuals)
 out2$Date <- as.POSIXct(as.yearqtr(row.names(out2)))
 
 # Reordering
-out2 <- out2[,c(5,1,2,3,4,6)]
-out2$improvement <- out2$improvement - out2$residuals
+names(out2)
+out2 <- out2[,c(4,1,2,3,5)]
 out2.m <- melt(out2, id = c("Date", "weights"))
 
 # Plotting
